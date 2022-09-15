@@ -1,22 +1,18 @@
 ﻿using Core.Entities;
 using Core.Entities.OrdenCompra;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace BussinessLogic.Data
 {
     public class MarketDbContextData
     {
-        public static async Task CargarDataAsync(MarketDbContext context, ILoggerFactory loggerFactory) {
+        public static async Task CargarDataAsync(MarketDbContext context, ILoggerFactory loggerFactory)
+        {
             try
             {
                 //Para agragar las marcas a la bd
-                if(!context.Marca.Any())
+                if (!context.Marca.Any())
                 {
                     var marcaData = File.ReadAllText("../BussinessLogic/CargarData/marca.json");
                     var marcas = JsonSerializer.Deserialize<List<Marca>>(marcaData);
@@ -71,7 +67,8 @@ namespace BussinessLogic.Data
                     await context.SaveChangesAsync();
                 }
             }
-            catch (Exception ex) { 
+            catch (Exception ex)
+            {
                 var logger = loggerFactory.CreateLogger<MarketDbContextData>();
                 logger.LogError(ex.Message);
             }
